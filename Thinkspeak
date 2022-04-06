@@ -1,0 +1,33 @@
+// This #include statement was automatically added by the Particle IDE.
+#include <Adafruit_DHT.h>
+
+// This #include statement was automatically added by the Particle IDE.
+#include <ThingSpeak.h>
+
+
+TCPClient upload;
+
+DHT dht(D2, DHT11);
+
+void setup() {
+    ThingSpeak.begin(upload);
+    dht.begin();
+}
+
+void loop() {
+    
+    digitalWrite(MY_LED, HIGH);
+    delay(500);
+    
+    float humidity = dht.getHumidity();
+
+    float temperature = dht.getTempCelcius();
+    ThingSpeak.writeField(1696109, 1, humidity, QZKTZ1FS9GGD77C7);
+    delay(3000);
+  
+    ThingSpeak.writeField(1696109, 2, temperature, QZKTZ1FS9GGD77C7);
+    delay(3000); 
+    
+    digitalWrite(MY_LED,LOW);
+  
+}
